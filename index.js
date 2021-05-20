@@ -8,7 +8,8 @@ const slotByZipcode = require("./findSlotsByZipcode");
 const express = require("express");
 const app = express();
 
-const token = "1788105136:AAGlGEuQI796D1Sk-aeTUmnRW-bIIJ9wRzE";
+const token =
+  process.env.BOT_TOKEN || "1788105136:AAGlGEuQI796D1Sk-aeTUmnRW-bIIJ9wRzE";
 
 var bot = new Telegraf(token);
 
