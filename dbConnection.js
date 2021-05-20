@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-mongoose.connect("mongodb://127.0.0.1/cowin", {
+const URL = process.env.DB_URL || "127.0.0.1";
+mongoose.connect(`mongodb://${URL}/cowin`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
