@@ -19,7 +19,7 @@ let stage, bot;
 try {
   if (process.env.NODE_ENV === "production") {
     bot = new Telegraf(token);
-    bot.setWebHook(process.env.HEROKU_URL + bot.token);
+    bot.setWebHook(process.env.HEROKU_URL + token);
   } else {
     bot = new Telegraf(token);
   }
