@@ -11,7 +11,7 @@ const defaultError = require("./defaultErrorScene");
 const express = require("express");
 const app = express();
 const PORT = process.env.NODE_PORT || 3000;
-const BOT_PORT = process.env.NODE_PORT || 3001;
+const BOT_PORT = process.env.BOT_PORT || 3001;
 const BOT_URL = "https://cowin-assist-bot.herokuapp.com/";
 
 const token =
