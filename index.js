@@ -17,20 +17,12 @@ const BOT_TOKEN =
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
 
-const BOT_OPTIONS = {
-  telegram: {
-    // Telegram options
-    agent: null, // https.Agent instance, allows custom proxy, certificate, keep alive, etc.
-    webhookReply: true, // Reply via webhook
-  },
-};
-
 let stage;
 
 try {
-  var bot = new Telegraf(BOT_TOKEN, [BOT_OPTIONS]);
+  var bot = new Telegraf(BOT_TOKEN);
   bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-  bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
+  app.use(bot.webhookCallback(`/bot${API_TOKEN}`));
 
   calen.intiateCalendar(bot);
 
@@ -62,18 +54,18 @@ bot.command("help", (ctx) => {
   `);
 });
 
-bot.use(session());
-bot.use(stage.middleware());
+// bot.use(session());
+// bot.use(stage.middleware());
 
-bot.launch();
+// bot.launch();
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-// app.listen(PORT, () => {
-//   console.log(`Example app listening at http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
