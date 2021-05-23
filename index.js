@@ -18,9 +18,9 @@ const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
 
 let stage;
-
+var bot;
 try {
-  var bot = new Telegraf(BOT_TOKEN);
+  bot = new Telegraf(BOT_TOKEN);
   bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
   app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
@@ -43,6 +43,8 @@ try {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
 
+bot.start((ctx) => ctx.reply("Welcome"));
+
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
   return ctx.scene.enter("Default_Error");
@@ -54,8 +56,8 @@ bot.command("help", (ctx) => {
   `);
 });
 
-// bot.use(session());
-// bot.use(stage.middleware());
+bot.use(session());
+bot.use(stage.middleware());
 
 // bot.launch();
 
