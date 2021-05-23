@@ -11,15 +11,18 @@ const defaultError = require("./defaultErrorScene");
 const express = require("express");
 const app = express();
 const PORT = process.env.NODE_PORT || 3000;
-const BOT_PORT = process.env.BOT_PORT || 3001;
-const BOT_URL = "https://cowin-assist-bot.herokuapp.com/";
 
 const token =
   process.env.BOT_TOKEN || "1788105136:AAHIiTSo39OtkSLlVrfyGz-mjmj4NvlWKA0";
 
-let stage;
+let stage, bot;
 try {
-  var bot = new Telegraf(token);
+  if (process.env.NODE_ENV === "production") {
+    bot = new Telegraf(token);
+    bot.setWebHook(process.env.HEROKU_URL + bot.token);
+  } else {
+    bot = new Telegraf(token);
+  }
 
   calen.intiateCalendar(bot);
 
@@ -62,17 +65,7 @@ app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
 
-// Start webhook via launch method (preferred)
-if (process.env.NODE_ENV === "production") {
-  bot.launch({
-    webhook: {
-      domain: BOT_URL,
-      port: BOT_PORT,
-    },
-  });
-} else {
-  bot.launch();
-}
+bot.launch();
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
