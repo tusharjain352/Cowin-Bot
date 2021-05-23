@@ -10,19 +10,18 @@ const defaultError = require("./defaultErrorScene");
 
 const express = require("express");
 const app = express();
-const PORT = process.env.NODE_PORT || 3000;
 
-const token =
+const BOT_TOKEN =
   process.env.BOT_TOKEN || "1788105136:AAHIiTSo39OtkSLlVrfyGz-mjmj4NvlWKA0";
 
-let stage, bot;
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
+
+let stage;
 try {
-  if (process.env.NODE_ENV === "production") {
-    bot = new Telegraf(token);
-    bot.setWebHook(process.env.HEROKU_URL + token);
-  } else {
-    bot = new Telegraf(token);
-  }
+  var bot = new Telegraf(BOT_TOKEN);
+  bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+  bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
   calen.intiateCalendar(bot);
 
@@ -57,15 +56,15 @@ bot.command("help", (ctx) => {
 bot.use(session());
 bot.use(stage.middleware());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
-});
-
 bot.launch();
+
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Example app listening at http://localhost:${PORT}`);
+// });
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
