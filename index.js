@@ -17,9 +17,18 @@ const BOT_TOKEN =
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
 
+const BOT_OPTIONS = {
+  telegram: {
+    // Telegram options
+    agent: null, // https.Agent instance, allows custom proxy, certificate, keep alive, etc.
+    webhookReply: true, // Reply via webhook
+  },
+};
+
 let stage;
+
 try {
-  var bot = new Telegraf(BOT_TOKEN);
+  var bot = new Telegraf(BOT_TOKEN, [BOT_OPTIONS]);
   bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
   bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
