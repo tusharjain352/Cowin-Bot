@@ -22,7 +22,7 @@ let stage;
 try {
   var bot = new Telegraf(BOT_TOKEN);
   bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-  app.use(bot.webhookCallback(`/bot${API_TOKEN}`));
+  app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
   calen.intiateCalendar(bot);
 
