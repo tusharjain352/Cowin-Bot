@@ -19,18 +19,18 @@ const covidTrackerScene = new Scenes.WizardScene(
   "Covid_19_Tracker",
   async (ctx) => {
     try {
-      if (ctx && ctx.message) {
-        const userData = {
-          first_name: ctx.message.from.first_name,
-          last_name: ctx.message.from.last_name,
-          user_id: ctx.message.from.id,
-        };
+      // if (ctx && ctx.message) {
+      //   const userData = {
+      //     first_name: ctx.message.from.first_name,
+      //     last_name: ctx.message.from.last_name,
+      //     user_id: ctx.message.from.id,
+      //   };
 
-        const checkUserExist = await userService.checkUser(userData);
-        if (!checkUserExist) {
-          const saveUser = await userService.createUser(userData);
-        }
-      }
+      //   const checkUserExist = await userService.checkUser(userData);
+      //   if (!checkUserExist) {
+      //     const saveUser = await userService.createUser(userData);
+      //   }
+      // }
 
       ctx.reply(
         `Hi! ${ctx.from.first_name} 👋 \nWelcome to Covid Assistance bot. Here is what I can: \n \n -Search for vaccine slots 🇮🇳 \n -Available 🇮🇳 Vaccine's Information \n -Covid-19 🇮🇳 Tracker & WHO links \n \n Shall we start? 👇 `,
