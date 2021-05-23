@@ -12,15 +12,15 @@ const express = require("express");
 const app = express();
 
 const BOT_TOKEN =
-  process.env.BOT_TOKEN || "1788105136:AAHIiTSo39OtkSLlVrfyGz-mjmj4NvlWKA0";
+  process.env.BOT_TOKEN || "1788105136:AAG32XgffBqWzrc6awhwoOle6flk9q9nJzY";
 
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
 
 let stage;
-var bot;
+
 try {
-  bot = new Telegraf(BOT_TOKEN);
+  var bot = new Telegraf(BOT_TOKEN);
   bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
   app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
@@ -42,8 +42,9 @@ try {
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
+bot.launch();
 
-bot.start((ctx) => ctx.reply("Welcome"));
+//bot.start((ctx) => ctx.reply("Welcome"));
 
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
