@@ -6,6 +6,7 @@ const checkUser = async (userInfo) => {
     const filter = { user_id: userInfo.user_id };
     userData = await _user.findOneAndUpdate(filter, {
       $inc: { usageCount: 1 },
+      useFindAndModify: false,
     });
   } catch (e) {
     throw new Error(e);
