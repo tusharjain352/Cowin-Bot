@@ -4,32 +4,42 @@ const calen = require("./calendar");
 const welcomeUser = require("./welcomeUser");
 const slotByState = require("./findSlotsByState");
 const slotByZipcode = require("./findSlotsByZipcode");
+const covidTracker = require("./covidTracker");
+const vaccineInfo = require("./vaccineInfo");
+const defaultError = require("./defaultErrorScene");
 
 const express = require("express");
 const app = express();
 
 const token =
-  process.env.BOT_TOKEN || "1788105136:AAGlGEuQI796D1Sk-aeTUmnRW-bIIJ9wRzE";
+  process.env.BOT_TOKEN || "1788105136:AAHIiTSo39OtkSLlVrfyGz-mjmj4NvlWKA0";
 
-var bot = new Telegraf(token);
+let stage;
+try {
+  var bot = new Telegraf(token);
 
-calen.intiateCalendar(bot);
+  calen.intiateCalendar(bot);
 
-const stage = new Scenes.Stage(
-  [
-    welcomeUser.welcomeScene,
-    slotByState.stateScene,
-    slotByZipcode.zipcodeScene,
-  ],
-  {
-    default: "welcome",
-  }
-);
+  stage = new Scenes.Stage(
+    [
+      covidTracker.covidTrackerScene,
+      defaultError.defaultErrorScene,
+      welcomeUser.welcomeScene,
+      slotByState.stateScene,
+      slotByZipcode.zipcodeScene,
+      vaccineInfo.vaccineInfoScene,
+    ],
+    {
+      default: "Covid_19_Tracker",
+    }
+  );
+} catch (e) {
+  console.log("BOT INTIALIZATION EXCEPTION", e);
+}
 
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
-  ctx.reply("Sorry, I did not understand. Please try again");
-  return ctx.scene.leave();
+  return ctx.scene.enter("Default_Error");
 });
 
 bot.command("help", (ctx) => {

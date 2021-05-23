@@ -1,13 +1,23 @@
 const mongoose = require("mongoose");
-const URL = process.env.DB_URL || "127.0.0.1";
-mongoose.connect(`mongodb://${URL}/cowin`, {
+let url;
+
+if (process.env.NODE_ENV === "production") {
+  url =
+    "mongodb+srv://tushar:jain123@cowincluster.0ib1s.mongodb.net/cowin?retryWrites=true&w=majority";
+} else {
+  url = "mongodb://127.0.0.1/cowin";
+}
+
+const connectionParams = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
   useCreateIndex: true,
-});
-
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
-module.exports = {};
+  useUnifiedTopology: true,
+};
+mongoose
+  .connect(url, connectionParams)
+  .then(() => {
+    console.log("Connected to database ");
+  })
+  .catch((err) => {
+    console.error(`Error connecting to the database. \n${err}`);
+  });

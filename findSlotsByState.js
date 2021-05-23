@@ -33,17 +33,17 @@ const stateScene = new Scenes.WizardScene(
     );
 
     ctx.reply(
-      `I have set your state preference to ${st_name}.Please select your district`,
+      `I have set your state preference to ${st_name}✔️.Please select your district`,
       Markup.inlineKeyboard(buttons, { columns: 3 })
     );
     ctx.wizard.state = {};
     return ctx.wizard.next();
   },
   async (ctx) => {
-    ctx.deleteMessage();
+    //ctx.deleteMessage();
 
     if (ctx.wizard.state && ctx.wizard.state.invalidCalendarInput) {
-      ctx.reply(`Sorry, I did not understand. ! \n Please try again`);
+      ctx.reply(`Sorry, I did not understand 🙃. ! \n Please try again`);
       ctx.wizard.state.invalidCalendarInput = false;
     } else {
       let [
@@ -63,7 +63,7 @@ const stateScene = new Scenes.WizardScene(
     maxDate.setDate(today.getDate());
 
     ctx.reply(
-      `I have set your district preference to ${ctx.wizard.state.district_name}.Please select date for slots availability`,
+      `I have set your district preference to ${ctx.wizard.state.district_name} ✔️.Please select date for slots availability`,
       calendar.setMinDate(minDate).setMaxDate(maxDate).getCalendar()
     );
     return ctx.wizard.next();
@@ -93,7 +93,7 @@ const stateScene = new Scenes.WizardScene(
       //ctx.reply("Anything else ");
     } else {
       ctx.reply(
-        `No Slots are available for ${slotDate}, Please try later ! Thank you for your time`
+        `No Slots are available for ${slotDate}, Please try later 😔 ! Thank you for your time`
       );
     }
 

@@ -13,7 +13,7 @@ const zipcodeScene = new Scenes.WizardScene(
   },
   (ctx) => {
     if (ctx.wizard.state && ctx.wizard.state.invalidCalendarInput) {
-      ctx.reply(`Sorry, I did not understand. \n Please enter zipcode again`);
+      ctx.reply(`Sorry, I did not understand 🙃.\nPlease enter zipcode again`);
       ctx.wizard.state.invalidCalendarInput = false;
       return;
     }
@@ -32,7 +32,7 @@ const zipcodeScene = new Scenes.WizardScene(
     maxDate.setDate(today.getDate());
 
     ctx.reply(
-      `I have set your zipcode preference to ${ctx.wizard.state.zipcode}.Please select date for slots availability`,
+      `I have set your zipcode preference to ${ctx.wizard.state.zipcode}✔️.Please select date for slots availability`,
       calendar.setMinDate(minDate).setMaxDate(maxDate).getCalendar()
     );
     return ctx.wizard.next();
@@ -60,15 +60,14 @@ const zipcodeScene = new Scenes.WizardScene(
         }
       } else {
         ctx.reply(
-          `No Slots are available for ${slotDate}, Please try later ! Thank you for your time`
+          `No Slots are available for ${slotDate}, Please try later 😔 ! Thank you for your time`
         );
       }
 
       ctx.wizard.state = {};
       return ctx.scene.leave();
     } catch (e) {
-      ctx.reply("Sorry, I did not understand. Please try again", e);
-      return ctx.scene.leave();
+      return ctx.scene.enter("Default_Error");
     }
   }
 );
