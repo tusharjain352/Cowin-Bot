@@ -42,9 +42,15 @@ try {
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
-bot.launch();
 
-//bot.start((ctx) => ctx.reply("Welcome"));
+//bot.launch();
+
+bot.launch({
+  webhook: {
+    domain: URL,
+    port: 4000,
+  },
+});
 
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
@@ -59,8 +65,6 @@ bot.command("help", (ctx) => {
 
 bot.use(session());
 bot.use(stage.middleware());
-
-// bot.launch();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
