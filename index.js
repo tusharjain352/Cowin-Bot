@@ -10,7 +10,9 @@ const defaultError = require("./defaultErrorScene");
 
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.NODE_PORT || 3000;
+const BOT_PORT = process.env.NODE_PORT || 3001;
+const BOT_URL = "https://cowin-assist-bot.herokuapp.com/";
 
 const token =
   process.env.BOT_TOKEN || "1788105136:AAHIiTSo39OtkSLlVrfyGz-mjmj4NvlWKA0";
@@ -52,8 +54,6 @@ bot.command("help", (ctx) => {
 bot.use(session());
 bot.use(stage.middleware());
 
-bot.launch();
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -62,5 +62,18 @@ app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
 
-// process.once("SIGINT", () => bot.stop("SIGINT"));
-// process.once("SIGTERM", () => bot.stop("SIGTERM"));
+// Start webhook via launch method (preferred)
+if (process.env.NODE_ENV === "production") {
+  bot.launch({
+    webhook: {
+      domain: BOT_URL,
+      port: BOT_PORT,
+    },
+  });
+} else {
+  bot.launch();
+}
+
+// Enable graceful stop
+process.once("SIGINT", () => bot.stop("SIGINT"));
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
