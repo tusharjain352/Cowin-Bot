@@ -11,7 +11,7 @@ const findSlot = async (DISTRICT_ID, APPOINTMENT_DATE) => {
     //console.log("slotsbystate", availableSlots);
     return availableSlots;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -24,7 +24,7 @@ const findSlotByZip = async (ZIPCODE, APPOINTMENT_DATE) => {
     //console.log("slotsbyzip", availableSlots);
     return availableSlots;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -34,7 +34,7 @@ const listStates = async () => {
     const response = await got(API_URL);
     return response && response.body;
   } catch (e) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -44,7 +44,7 @@ const listDistricts = async (districtID) => {
     const response = await got(API_URL);
     return response && response.body;
   } catch (e) {
-    console.error(error);
+    console.log(error);
   }
 };
 
