@@ -22,19 +22,9 @@ try {
   var bot = new Telegraf(BOT_TOKEN);
   //calen.intiateCalendar(bot);
 
-  // stage = new Scenes.Stage(
-  //   [
-  //     covidTracker.covidTrackerScene,
-  //     defaultError.defaultErrorScene,
-  //     welcomeUser.welcomeScene,
-  //     slotByState.stateScene,
-  //     slotByZipcode.zipcodeScene,
-  //     vaccineInfo.vaccineInfoScene,
-  //   ],
-  //   {
-  //     default: "Covid_19_Tracker",
-  //   }
-  // );
+  stage = new Scenes.Stage([covidTracker.covidTrackerScene], {
+    default: "Covid_19_Tracker",
+  });
 
   bot
     .launch({
@@ -59,7 +49,7 @@ try {
     .catch((e) => console.log("CDM exception", e));
 
   bot.use(session()).catch((e) => console.log("session exception", e));
-  //bot.use(stage.middleware()).catch((e) => console.log("Middleware excep", e));
+  bot.use(stage.middleware()).catch((e) => console.log("Middleware excep", e));
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
