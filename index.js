@@ -19,11 +19,6 @@ const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
 
 let stage;
 var bot = new Telegraf(BOT_TOKEN);
-// bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-// app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
-
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
 try {
   calen.intiateCalendar(bot);
@@ -45,7 +40,12 @@ try {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
 
-//bot.launch();
+bot.launch({
+  webhook: {
+    domain: URL,
+    port: PORT,
+  },
+});
 
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
@@ -60,10 +60,6 @@ bot.command("help", (ctx) => {
 
 bot.use(session());
 bot.use(stage.middleware());
-bot.use((ctx, next) => {
-  console.log(ctx);
-  return next();
-});
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
