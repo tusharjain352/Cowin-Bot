@@ -33,7 +33,7 @@ const listStates = async () => {
   try {
     const response = await got(API_URL);
     return response && response.body;
-  } catch (e) {
+  } catch (error) {
     console.log(error);
   }
 };
@@ -43,7 +43,7 @@ const listDistricts = async (districtID) => {
   try {
     const response = await got(API_URL);
     return response && response.body;
-  } catch (e) {
+  } catch (error) {
     console.log(error);
   }
 };
