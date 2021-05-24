@@ -56,6 +56,7 @@ const covidTrackerScene = new Scenes.WizardScene(
 
       return ctx.wizard.next();
     } catch (e) {
+      console.log("Exception occured 1st", e);
       return ctx.scene.enter("Default_Error");
     }
   },
