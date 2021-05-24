@@ -31,7 +31,13 @@ const findSlotByZip = async (ZIPCODE, APPOINTMENT_DATE) => {
 const listStates = async () => {
   const API_URL = `${BASE_URL}admin/location/states`;
   try {
-    const response = await got(API_URL);
+    const options = {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
+      },
+    };
+    const response = await got(API_URL, options);
     return response && response.body;
   } catch (error) {
     console.log(error);
