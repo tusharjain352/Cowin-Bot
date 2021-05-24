@@ -3,7 +3,11 @@ const Calendar = require("./node_modules/telegraf-calendar-telegram/index");
 let calendar;
 
 const intiateCalendar = (botInstance) => {
-  calendar = new Calendar(botInstance);
+  try {
+    calendar = new Calendar(botInstance);
+  } catch (e) {
+    console.log("Calendar Instance Failed");
+  }
 };
 
 const getCalendar = () => {

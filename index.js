@@ -17,10 +17,9 @@ const BOT_TOKEN =
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
 
-let stage;
-var bot = new Telegraf(BOT_TOKEN);
-
 try {
+  let stage;
+  var bot = new Telegraf(BOT_TOKEN);
   calen.intiateCalendar(bot);
 
   stage = new Scenes.Stage(
@@ -36,30 +35,30 @@ try {
       default: "Covid_19_Tracker",
     }
   );
+
+  bot.launch({
+    webhook: {
+      domain: URL,
+      port: PORT,
+    },
+  });
+
+  bot.catch((err, ctx) => {
+    console.log("Error in bot:", err);
+    return ctx.scene.enter("Default_Error");
+  });
+
+  bot.command("help", (ctx) => {
+    ctx.reply(`💡 Help \n
+    This bot will help you to see current available slots by checking CoWin website. To start, click on "Check Open Slots".\n
+    `);
+  });
+
+  bot.use(session());
+  bot.use(stage.middleware());
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
-
-bot.launch({
-  webhook: {
-    domain: URL,
-    port: PORT,
-  },
-});
-
-bot.catch((err, ctx) => {
-  console.log("Error in bot:", err);
-  return ctx.scene.enter("Default_Error");
-});
-
-bot.command("help", (ctx) => {
-  ctx.reply(`💡 Help \n
-  This bot will help you to see current available slots by checking CoWin website. To start, click on "Check Open Slots".\n
-  `);
-});
-
-bot.use(session());
-bot.use(stage.middleware());
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
