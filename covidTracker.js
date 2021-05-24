@@ -37,18 +37,9 @@ const covidTrackerScene = new Scenes.WizardScene(
         Markup.inlineKeyboard(
           [
             Markup.button.callback("Search 💉 Slots ", "VACCINE"),
-            // Markup.button.url(
-            //   "Covid-19 🇮🇳 IN",
-            //   "https://www.covid19india.org/"
-            // ),
-            // Markup.button.url("WHO 🌎", "https://covid19.who.int/"),
-            // Markup.button.url(
-            //   "🌎 Vaccine Tracker",
-            //   "https://www.bing.com/covid/local/india?vert=vaccineTracker"
-            // ),
+
             Markup.button.callback("Available 💉 Vaccine's 🇮🇳", "VACCINE_INFO"),
             Markup.button.callback("EXIT 🚪", "CANCELLED"),
-            Markup.button.url("Share Now 👫", shareURL),
           ],
           { columns: 2 }
         )
