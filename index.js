@@ -58,8 +58,8 @@ try {
     })
     .catch((e) => console.log("CDM exception", e));
 
-  // bot.use(session());
-  // bot.use(stage.middleware());
+  bot.use(session());
+  bot.use(stage.middleware());
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
