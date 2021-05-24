@@ -9,7 +9,8 @@ let shareURL;
 
 if (process.env.NODE_ENV === "production") {
   shareURL =
-    "mongodb+srv://tushar:jain123@cowincluster.0ib1s.mongodb.net/cowin?retryWrites=true&w=majority";
+    process.env.SHARE_URL ||
+    "https://t.me/share/url?url=https://t.me/tusharjain352_cowin_slot_bot&text=Covid-19";
 } else {
   shareURL =
     "https://t.me/share/url?url=https://t.me/tusharjain352_cowin_slot_bot&text=Covid-19";
@@ -37,12 +38,10 @@ const covidTrackerScene = new Scenes.WizardScene(
         Markup.inlineKeyboard(
           [
             Markup.button.callback("Search 💉 Slots ", "VACCINE"),
-            Markup.button.url(
-              "Covid-19 🇮🇳 IN",
-              "https://t.me/share/url?url=https://www.covid19india.org/"
-            ),
+            Markup.button.url("Covid-19 🇮🇳 IN", "www.covid19india.org/"),
             Markup.button.callback("Available 💉 Vaccine's 🇮🇳", "VACCINE_INFO"),
             Markup.button.callback("EXIT 🚪", "CANCELLED"),
+            Markup.button.url("Share Now 👫", shareURL),
           ],
           { columns: 2 }
         )
