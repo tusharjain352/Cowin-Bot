@@ -15,15 +15,14 @@ const BOT_TOKEN =
   process.env.BOT_TOKEN || "1788105136:AAG32XgffBqWzrc6awhwoOle6flk9q9nJzY";
 
 const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || "https://your-heroku-app.herokuapp.com";
+const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
 
 let stage;
+var bot = new Telegraf(BOT_TOKEN);
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
 try {
-  var bot = new Telegraf(BOT_TOKEN);
-  bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-  app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
-
   calen.intiateCalendar(bot);
 
   stage = new Scenes.Stage(
@@ -45,13 +44,6 @@ try {
 
 //bot.launch();
 
-bot.launch({
-  webhook: {
-    domain: URL,
-    port: 4000,
-  },
-});
-
 bot.catch((err, ctx) => {
   console.log("Error in bot:", err);
   return ctx.scene.enter("Default_Error");
@@ -65,6 +57,10 @@ bot.command("help", (ctx) => {
 
 bot.use(session());
 bot.use(stage.middleware());
+bot.use((ctx, next) => {
+  console.log(ctx);
+  return next();
+});
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
