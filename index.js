@@ -1,6 +1,6 @@
 const { Telegraf, Markup, session, Scenes, WizardScene } = require("telegraf");
-const db = require("./dbConnection");
-const calen = require("./calendar");
+//const db = require("./dbConnection");
+//const calen = require("./calendar");
 const welcomeUser = require("./welcomeUser");
 const slotByState = require("./findSlotsByState");
 const slotByZipcode = require("./findSlotsByZipcode");
@@ -20,7 +20,7 @@ const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
 try {
   let stage;
   var bot = new Telegraf(BOT_TOKEN);
-  calen.intiateCalendar(bot);
+  //calen.intiateCalendar(bot);
 
   stage = new Scenes.Stage(
     [
@@ -36,38 +36,34 @@ try {
     }
   );
 
-  bot.launch({
-    webhook: {
-      domain: URL,
-      port: PORT,
-    },
-  });
+  bot
+    .launch({
+      webhook: {
+        domain: URL,
+        port: PORT,
+      },
+    })
+    .catch((e) => console.log("CDM exception", e));
 
   bot.catch((err, ctx) => {
     console.log("Error in bot:", err);
     return ctx.scene.enter("Default_Error");
   });
 
-  bot.command("help", (ctx) => {
-    ctx.reply(`💡 Help \n
+  bot
+    .command("help", (ctx) => {
+      ctx.reply(`💡 Help \n
     This bot will help you to see current available slots by checking CoWin website. To start, click on "Check Open Slots".\n
     `);
-  });
+    })
+    .catch((e) => console.log("CDM exception", e));
 
-  bot.use(session());
-  bot.use(stage.middleware());
+  // bot.use(session());
+  // bot.use(stage.middleware());
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Example app listening at http://localhost:${PORT}`);
-// });
-
 // Enable graceful stop
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+// process.once("SIGINT", () => bot.stop("SIGINT"));
+// process.once("SIGTERM", () => bot.stop("SIGTERM"));
