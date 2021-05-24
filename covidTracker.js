@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
     "mongodb+srv://tushar:jain123@cowincluster.0ib1s.mongodb.net/cowin?retryWrites=true&w=majority";
 } else {
   shareURL =
-    "https://t.me/share/url?url=https://t.me/tusharjain352_cowin_slot_bot&text=Covid-19";
+    "http://t.me/share/url?url=https://t.me/tusharjain352_cowin_slot_bot&text=Covid-19";
 }
 
 const covidTrackerScene = new Scenes.WizardScene(
@@ -37,9 +37,15 @@ const covidTrackerScene = new Scenes.WizardScene(
         Markup.inlineKeyboard(
           [
             Markup.button.callback("Search 💉 Slots ", "VACCINE"),
-
+            Markup.button.url("Covid-19 🇮🇳 IN", "http://www.covid19india.org/"),
+            Markup.button.url("WHO 🌎", "http://covid19.who.int/"),
+            Markup.button.url(
+              "🌎 Vaccine Tracker",
+              "http://www.bing.com/covid/local/india?vert=vaccineTracker"
+            ),
             Markup.button.callback("Available 💉 Vaccine's 🇮🇳", "VACCINE_INFO"),
             Markup.button.callback("EXIT 🚪", "CANCELLED"),
+            Markup.button.url("Share Now 👫", shareURL),
           ],
           { columns: 2 }
         )
