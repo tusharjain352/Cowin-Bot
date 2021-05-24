@@ -19,8 +19,11 @@ const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
 
 let stage;
 var bot = new Telegraf(BOT_TOKEN);
+// bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+// app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
+
 bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-app.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
 try {
   calen.intiateCalendar(bot);
@@ -62,13 +65,13 @@ bot.use((ctx, next) => {
   return next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Example app listening at http://localhost:${PORT}`);
+// });
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
