@@ -72,7 +72,8 @@ const covidTrackerScene = new Scenes.WizardScene(
         return ctx.scene.leave();
       }
     } catch (e) {
-      return ctx.scene.enter("Default_Error");
+      console.log("Exception in covid tracker scene", e);
+      // return ctx.scene.enter("Default_Error");
     }
   }
 );
