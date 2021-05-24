@@ -36,22 +36,16 @@ try {
     }
   );
 
-  bot
-    .launch({
-      webhook: {
-        domain: URL,
-        port: PORT,
-      },
-    })
-    .catch((e) => console.log("CDM exception", e));
+  bot.launch({
+    webhook: {
+      domain: URL,
+      port: PORT,
+    },
+  });
 
   bot.catch((err, ctx) => {
     console.log("Error in bot:", err);
     return ctx.scene.enter("Default_Error");
-  });
-
-  bot.command("start", (ctx) => {
-    return ctx.scene.enter("Covid_19_Tracker");
   });
 
   bot.command("help", (ctx) => {
@@ -60,8 +54,8 @@ try {
     `);
   });
 
-  bot.use(session()).catch((e) => console.log("session exception", e));
-  bot.use(stage.middleware()).catch((e) => console.log("Middleware excep", e));
+  bot.use(session());
+  bot.use(stage.middleware());
 } catch (e) {
   console.log("BOT INTIALIZATION EXCEPTION", e);
 }
