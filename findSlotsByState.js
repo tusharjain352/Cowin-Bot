@@ -6,12 +6,14 @@ const { Telegraf, Markup, session, Scenes, WizardScene } = require("telegraf");
 const stateScene = new Scenes.WizardScene(
   "check_slots_by_state", // first argument is Scene_ID, same as for BaseScene
   async (ctx) => {
-    const { states } = JSON.parse(await apiController.listStates());
+    // const { states } = JSON.parse(await apiController.listStates());
+    const {states} = require("./services/states");
+    console.log("States data from COWIN", states);
     const buttons = states.map((st) =>
       Markup.button.callback(st.state_name, st.state_name + "-" + st.state_id)
     );
 
-    ctx.reply(
+    await ctx.reply(
       "Please select your state",
       Markup.inlineKeyboard(buttons, { columns: 3 })
     );
@@ -25,6 +27,8 @@ const stateScene = new Scenes.WizardScene(
     const { districts } = JSON.parse(
       await apiController.listDistricts(selected_state)
     );
+    console.log("Districts from Cowin", districts);
+
     const buttons = districts.map((dst) =>
       Markup.button.callback(
         dst.district_name,
@@ -32,7 +36,7 @@ const stateScene = new Scenes.WizardScene(
       )
     );
 
-    ctx.reply(
+   await ctx.reply(
       `I have set your state preference to ${st_name}✔️.Please select your district`,
       Markup.inlineKeyboard(buttons, { columns: 3 })
     );
@@ -43,7 +47,7 @@ const stateScene = new Scenes.WizardScene(
     //ctx.deleteMessage();
 
     if (ctx.wizard.state && ctx.wizard.state.invalidCalendarInput) {
-      ctx.reply(`Sorry, I did not understand 🙃. ! \n Please try again`);
+      await ctx.reply(`Sorry, I did not understand 🙃. ! \n Please try again`);
       ctx.wizard.state.invalidCalendarInput = false;
     } else {
       let [
@@ -62,7 +66,7 @@ const stateScene = new Scenes.WizardScene(
     maxDate.setMonth(today.getMonth() + 2);
     maxDate.setDate(today.getDate());
 
-    ctx.reply(
+    await ctx.reply(
       `I have set your district preference to ${ctx.wizard.state.district_name} ✔️.Please select date for slots availability`,
       calendar.setMinDate(minDate).setMaxDate(maxDate).getCalendar()
     );

@@ -34,10 +34,10 @@ const covidTrackerScene = new Scenes.WizardScene(
       }
 
       ctx.reply(
-        `Hi! ${ctx.from.first_name} 👋 \nWelcome to Covid Assistance bot. Here is what I can: \n \n -Search for vaccine slots 🇮🇳 \n -Available 🇮🇳 Vaccine's Information \n -Covid-19 🇮🇳 Tracker & WHO links \n \n Shall we start? 👇 `,
+        `Hi! ${ctx.from.first_name} 👋 \nWelcome to Covid Assistance bot. Here is what I can: \n \n -Search for vaccine center's 🇮🇳 \n -Available 🇮🇳 Vaccine's Information \n -Covid-19 IN 🇮🇳 & Global 🌎 Tracker  \n \n Shall we start? 👇 `,
         Markup.inlineKeyboard(
           [
-            Markup.button.callback("Search 💉 Slots ", "VACCINE"),
+            Markup.button.callback("Search 💉 Center's ", "VACCINE"),
             Markup.button.url("Covid-19 🇮🇳 IN", "www.covid19india.org/"),
             Markup.button.url("Global Tracker 🌎", "www.bing.com/covid"),
             Markup.button.url(

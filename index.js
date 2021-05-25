@@ -10,16 +10,16 @@ const defaultError = require("./defaultErrorScene");
 
 const express = require("express");
 const app = express();
-
+const BOT_URL = process.env.BOT_URL
 const BOT_TOKEN =
-  process.env.BOT_TOKEN || "1788105136:AAG32XgffBqWzrc6awhwoOle6flk9q9nJzY";
+  process.env.BOT_TOKEN || "1855588545:AAFDueQQFKbAGGnIleRyMbk80QRCEk55_RQ";
 
 const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || "https://cowin-assist-bot.herokuapp.com/";
+
+let stage;
+var bot = new Telegraf(BOT_TOKEN);
 
 try {
-  let stage;
-  var bot = new Telegraf(BOT_TOKEN);
   calen.intiateCalendar(bot);
 
   stage = new Scenes.Stage(
@@ -38,10 +38,11 @@ try {
 
   bot.launch({
     webhook: {
-      domain: URL,
+      domain: BOT_URL,
       port: PORT,
     },
   });
+  //bot.launch();
 
   bot.catch((err, ctx) => {
     console.log("Error in bot:", err);

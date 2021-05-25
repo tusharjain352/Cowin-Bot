@@ -8,7 +8,7 @@ const findSlot = async (DISTRICT_ID, APPOINTMENT_DATE) => {
   try {
     const response = await got(API_URL);
     const availableSlots = JSON.parse(response.body);
-    //console.log("slotsbystate", availableSlots);
+    console.log("slotsbystate", availableSlots);
     return availableSlots;
   } catch (error) {
     console.log(error);
@@ -21,7 +21,7 @@ const findSlotByZip = async (ZIPCODE, APPOINTMENT_DATE) => {
   try {
     const response = await got(API_URL);
     const availableSlots = JSON.parse(response.body);
-    //console.log("slotsbyzip", availableSlots);
+    console.log("slotsbyzip", availableSlots);
     return availableSlots;
   } catch (error) {
     console.log(error);
@@ -37,7 +37,7 @@ const listStates = async () => {
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
       },
     };
-    const response = await got(API_URL, options);
+    const response = await got(API_URL);
     return response && response.body;
   } catch (error) {
     console.log(error);
